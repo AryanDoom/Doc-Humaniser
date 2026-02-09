@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<body style="width:250px;padding:10px;font-family:sans-serif;">
+  <h3>Paste Log Data</h3>
+
+  <textarea
+    id="logInput"
+    style="width:100%;height:150px;"
+    placeholder='[{"action":"type","char":"H","delay":80}]'
+  ></textarea>
+
+  <button id="startBtn" style="width:100%;margin-top:10px;">
+    Start Writing
+  </button>
+
+  <script>
+    document.getElementById('startBtn').onclick = async () => {
+      const logData = document.getElementById('logInput').value.trim();
+      if (!logData) return;
+
+      const [tab] = await chrome.tabs.query({
+        active: true,
+        currentWindow: true
+      });
+
+      chrome.tabs.sendMessage(tab.id, {
+        action: "play",
+        data: logData
+      });
+    };
+  </script>
+</body>
+</html>
