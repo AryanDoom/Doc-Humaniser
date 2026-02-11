@@ -13,6 +13,17 @@
     Start Writing
   </button>
 
+  <textarea
+    id="prompt"
+    style="width:100%;height:15px;"
+    placeholder='Please type what the essay is supposed to be about'
+  ></textarea>
+
+  <button id="promptgivebtn" style="width:100%;margin-top:10px;">
+    Give Prompt
+  </button>
+
+
   <script>
     document.getElementById('startBtn').onclick = async () => {
       const logData = document.getElementById('logInput').value.trim();
@@ -28,6 +39,24 @@
         data: logData
       });
     };
+    document.getElementById("promptgivebtn").onclick = () => {
+      const promptText = document.getElementById("prompt").value;
+
+      if (!promptText.trim()) {
+        alert("Please enter a prompt");
+        return;
+      }
+
+      console.log("Prompt:", promptText);
+
+      chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
+        chrome.tabs.sendMessage(tab.id, {
+          action: "prompt",
+          data: promptText
+      });
+    });
+  };
+
   </script>
 </body>
 </html>

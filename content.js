@@ -14,7 +14,7 @@ function sleep(ms) {
 }
 
 async function focusEditor() {
-  // Click center of viewport (Docs editor area)
+
   const x = window.innerWidth / 2;
   const y = window.innerHeight / 2;
 
