@@ -48,10 +48,24 @@ Write an essay on this:
 """
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-2.0-flash", # Updated to a valid model version
         contents=prompt
     )
 
-    return essay
+    return response.text
 
-generate_keystroke_log(essay)
+
+if __name__ == "__main__":
+    topic = input("Enter the topic for your essay: ")
+    print(f"Generating human-like essay for: {topic}...")
+    
+    essay = what_would_doom_write(topic)
+    
+    if essay:
+        print("\n--- Generated Essay preview ---")
+        print(essay[:200] + "...")
+        print("-------------------------------\n")
+        
+        generate_keystroke_log(essay)
+    else:
+        print("Failed to generate essay.")
